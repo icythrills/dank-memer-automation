@@ -4,6 +4,13 @@ from colorama import Back
 import random
 import pyautogui as p
 import time
+import pyperclip 
+
+
+def select_text() -> str:
+    p.tripleClick(x=901, y=879)
+    p.hotkey('ctrl', 'c')
+    return pyperclip.paste()
 
 
 def beg():
@@ -35,13 +42,13 @@ def search():
     p.typewrite('pls search', interval=0.1)
     p.press('enter')
     time.sleep(6)
-    possible = ['couch', 'van', 'car', 'bed', 'coat', 'air', 'shoe', 'pantry']
-    p.typewrite(random.choice(possible))
+    options = select_text().split(',')
+    p.typewrite(random.choice(options), interval=0.2)
     p.press('enter')
 
 
 def random_afk():
-    rand = random.randint(0, 15) == 1
+    rand = random.randint(0, 20) == 1
     if rand:
         afk = random.randint(1800, 2700)
         print('Going AFK For ', afk / 60, 'minutes')
