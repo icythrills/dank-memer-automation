@@ -1,39 +1,57 @@
 import sys
+from colorama import Fore
 from colorama import Back
-from random import randint
-from colorama.ansi import Fore
+import random
 import pyautogui as p
 import time
 
+
 def beg():
-    p.typewrite('pls beg', interval=0.05)
+    p.typewrite('pls beg', interval=0.1)
     p.press('enter')
 
 
 def fish():
-    p.typewrite('pls fish', interval=0.05)
+    p.typewrite('pls fish', interval=0.04)
     p.press('enter')
 
-# def hunt():
-#     p.typewrite('pls hunt', interval=0.05)
-#     p.press('enter')
 
 def deposit():
-    p.typewrite('pls deposit all', interval=0.05)
+    p.typewrite('pls deposit all', interval=0.07)
+    p.press('enter')
+
+
+def balance():
+    p.typewrite('pls balance', interval=0.5)
+    p.press('enter')
+
+
+def inventory():
+    p.typewrite('pls inv', interval=0.6)
     p.press('enter')
 
 
 def search():
-    p.typewrite('pls search', interval=0.05)
+    p.typewrite('pls search', interval=0.1)
     p.press('enter')
-    time.sleep(5)
-    p.typewrite('air')
+    time.sleep(6)
+    possible = ['couch', 'van', 'car', 'bed', 'coat', 'air', 'shoe', 'pantry']
+    p.typewrite(random.choice(possible))
     p.press('enter')
 
-counter = 0
+
+def random_afk():
+    rand = random.randint(0, 15) == 1
+    if rand:
+        afk = random.randint(1800, 2700)
+        print('Going AFK For ', afk / 60, 'minutes')
+        time.sleep(afk)
+
+
 while True:
     try:
-        rand = randint(40, 50)
+        random_afk()
+        rand = random.randint(40, 60)
         print(
             Back.LIGHTBLUE_EX,
             'Sleeping  ',
@@ -41,40 +59,65 @@ while True:
             f'{rand} {Fore.MAGENTA}s{Fore.RESET}',
         )
         time.sleep(rand)
-        print(
-            Back.LIGHTRED_EX,
-            'Begging   ',
-            Back.RESET,
-        )
-        beg()
+        times = [0.3, 0.2, 0.5, 0.7, 1]
+        options = ['beg', 'fish', 'search', 'deposit']
+        na = []
+        while True:
+            choice = random.choice(options)
+            if choice not in na:
+                na.append(choice)
+            if len(na) == 4:
+                break
         
-        print(
-            Back.BLUE,
-            'Fishing   ',
-            Back.RESET,
-        )
-        fish()
-        time.sleep(2)
-        print(
-            Back.LIGHTBLUE_EX,
-            'Searching ',
-            Back.RESET
-        )
-        search()
-        print(
-            Back.GREEN,
-            'Depositing',
-            Back.RESET
-        )
-        deposit()
-        counter += 1
+        for val in na:
+            if val == 'beg':
+                time.sleep(random.choice(times))
+                print(
+                    Back.LIGHTRED_EX,
+                    'Begging   ',
+                    Back.RESET,
+                )
+                beg()
+                time.sleep(0.5)
+            
+            elif val == 'fish':
+                time.sleep(random.choice(times))
+                print(
+                    Back.BLUE,
+                    'Fishing   ',
+                    Back.RESET,
+                )
 
-        print(
-            Back.LIGHTMAGENTA_EX,
-            'Iteration ', 
-            Back.RESET,
-            counter,
-        )
+                fish()
+                time.sleep(0.4)
+            
+            elif val == 'search':
+                time.sleep(random.choice(times))
+                print(
+                    Back.LIGHTBLUE_EX,
+                    'Searching ',
+                    Back.RESET
+                )
+                search()
+                time.sleep(0.6)
+
+            elif val == 'deposit':
+                time.sleep(random.choice(times))
+                print(
+                    Back.GREEN,
+                    'Depositing',
+                    Back.RESET
+                )
+                deposit()
+            
+            show_inventory = random.randint(0, 7) == 1
+            if show_inventory:
+                inventory()
+            
+            show_balance = random.randint(0, 7) == 1
+            if show_balance:
+                balance()
+
 
     except KeyboardInterrupt:
         print(f'{Fore.LIGHTRED_EX}Terminated.{Fore.RESET}')
