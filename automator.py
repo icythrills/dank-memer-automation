@@ -47,13 +47,7 @@ while True:
             Back.RESET,
         )
         beg()
-        # print(
-        #     Back.CYAN,
-        #     'Hunting   ',
-        #     Back.RESET,
-        # )
-        # hunt()
-        # time.sleep(2)
+        
         print(
             Back.BLUE,
             'Fishing   ',
